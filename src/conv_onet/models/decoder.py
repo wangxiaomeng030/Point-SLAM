@@ -497,22 +497,21 @@ class POINT(nn.Module):
             point_mask (tensor): boolean tensor. False if at least two neighbors were not found for the point in question
         """
         device = f'cuda:{p.get_device()}'
-        match stage:
-            case 'geometry':
-                geo_occ, ray_mask, point_mask = self.geo_decoder(p, npc, npc_geo_feats,
+        
+        if stage == 'geometry':            
+            geo_occ, ray_mask, point_mask = self.geo_decoder(p, npc, npc_geo_feats,
                                                                  pts_num=pts_num, is_tracker=is_tracker, cloud_pos=cloud_pos,
                                                                  dynamic_r_query=dynamic_r_query)
-                raw = torch.zeros(
-                    geo_occ.shape[0], 4, device=device, dtype=torch.float)
-                raw[..., -1] = geo_occ
-                return raw, ray_mask, point_mask
-            case 'color':
-                geo_occ, ray_mask, point_mask = self.geo_decoder(p, npc, npc_geo_feats,
+            raw = torch.zeros(geo_occ.shape[0], 4, device=device, dtype=torch.float)
+            raw[..., -1] = geo_occ
+            return raw, ray_mask, point_mask
+        elif stage == 'color':           
+            geo_occ, ray_mask, point_mask = self.geo_decoder(p, npc, npc_geo_feats,
                                                                  pts_num=pts_num, is_tracker=is_tracker, cloud_pos=cloud_pos,
                                                                  dynamic_r_query=dynamic_r_query)
-                raw = self.color_decoder(p, npc, npc_col_feats,                                # returned (N,4)
+            raw = self.color_decoder(p, npc, npc_col_feats,
                                          is_tracker=is_tracker, cloud_pos=cloud_pos,
                                          pts_views_d=pts_views_d,
                                          dynamic_r_query=dynamic_r_query, exposure_feat=exposure_feat)
-                raw = torch.cat([raw, geo_occ.unsqueeze(-1)], dim=-1)
-                return raw, ray_mask, point_mask
+            raw = torch.cat([raw, geo_occ.unsqueeze(-1)], dim=-1)
+            return raw, ray_mask, point_mask
