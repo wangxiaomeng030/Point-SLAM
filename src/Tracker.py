@@ -7,11 +7,11 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from src.common import (get_camera_from_tensor, get_samples, as_intrinsics_matrix,
+from Point_SLAM.src.common import (get_camera_from_tensor, get_samples, as_intrinsics_matrix,
                         get_tensor_from_camera, setup_seed,
                         get_selected_index_with_grad, get_rays_from_uv)
-from src.utils.datasets import get_dataset
-from src.utils.Visualizer import Visualizer
+from Point_SLAM.src.utils.datasets import get_dataset
+from Point_SLAM.src.utils.Visualizer import Visualizer
 
 from skimage.color import rgb2gray
 from skimage import filters

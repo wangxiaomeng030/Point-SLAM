@@ -3,7 +3,7 @@ import numpy as np
 
 import faiss
 import faiss.contrib.torch_utils
-from src.common import setup_seed, clone_kf_dict
+from Point_SLAM.src.common import setup_seed, clone_kf_dict
 
 
 class NeuralPointCloud(object):

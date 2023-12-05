@@ -1,5 +1,5 @@
 import yaml
-from src import conv_onet
+from Point_SLAM.src import conv_onet
 
 
 def load_config(path, default_path=None):

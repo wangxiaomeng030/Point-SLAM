@@ -4,8 +4,8 @@ import numpy
 import os
 import argparse
 sys.path.append('.')
-from src.common import get_tensor_from_camera
-from src import config
+from Point_SLAM.src.common import get_tensor_from_camera
+from Point_SLAM.src import config
 
 
 def associate(first_list, second_list, offset=0.0, max_difference=0.02):

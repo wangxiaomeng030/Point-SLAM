@@ -1,4 +1,4 @@
-from src.conv_onet import (
+from Point_SLAM.src.conv_onet import (
     config, models
 )
 

@@ -2,7 +2,7 @@ import os
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
-from src.common import get_camera_from_tensor
+from Point_SLAM.src.common import get_camera_from_tensor
 import wandb
 import cv2
 
