@@ -767,6 +767,12 @@ class Mapper(object):
                     o3d.io.write_point_cloud(
                         f'{self.output}/final_point_cloud.ply', pcd)
                     print('Saved point cloud and point normals.')
+                else:
+                    pcd = o3d.geometry.PointCloud()
+                    pcd.points = o3d.utility.Vector3dVector(cloud_pos)
+                    pcd.colors = o3d.utility.Vector3dVector(cloud_rgb/255.0)
+                    o3d.io.write_point_cloud(
+                        f'{self.output}/mesh/{idx:05d}_cloud.ply', pcd)
                 if self.wandb:
                     wandb.log(
                         {f'Cloud/point_cloud_{idx:05d}': wandb.Object3D(point_cloud)})
@@ -777,6 +783,8 @@ class Mapper(object):
                                 if self.save_selected_keyframes_info else None, npc=self.npc,
                                 exposure_feat=self.exposure_feat_all
                                 if self.encode_exposure else None)
+            if idx == self.n_img-1:
+                self.logger.log_eval_data(idx)
 
             # mapping of first frame is done, can begin tracking
             self.mapping_idx[0] = idx
